@@ -12,7 +12,7 @@ class OrderedModel(models.Model):
   def save(self, swapping=False, *args, **kwargs):
     if not self.id:
       try:
-        self.order = self.max_order + 1
+        self.order = self.max_order() + 1
       except:
         self.order = 1 # 0 is a special index used in swap
     if self.order == 0 and not swapping:
@@ -27,6 +27,5 @@ class OrderedModel(models.Model):
     obj1.save()
     obj2.save()
 
-  @classmethod
-  def max_order(cls):
+  def max_order(self):
     return self.__class__.objects.order_by('-order')[0].order
