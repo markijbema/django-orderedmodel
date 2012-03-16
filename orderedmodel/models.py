@@ -28,4 +28,7 @@ class OrderedModel(models.Model):
     obj2.save()
 
   def max_order(self):
-    return self.__class__.objects.order_by('-order')[0].order
+    try:
+      return self.__class__.objects.order_by('-order')[0].order
+    except:
+      return 1
